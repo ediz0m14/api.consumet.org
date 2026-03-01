@@ -7,7 +7,9 @@ class StreamWishExtractor extends VideoExtractor {
   extract = async (videoUrl: URL): Promise<IVideo[]> => {
     try {
       const { data } = await this.client.get(videoUrl.href);
+      // Este código busca el link real del video (.m3u8 o .mp4) oculto
       const source = data.match(/file:\s*"([^"]+)"/)?.[1];
+      
       if (source) {
         this.sources.push({
           url: source,
@@ -21,4 +23,5 @@ class StreamWishExtractor extends VideoExtractor {
     }
   };
 }
+
 export default StreamWishExtractor;
